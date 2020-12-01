@@ -20,9 +20,7 @@ func GetMultiplicationOf2EntriesThatSum2020(entries []int) uint64 {
 
 	for i := 0; i < len(entries)-1; i++ {
 		currentEntry := entries[i]
-		if currentEntry >= 2020 {
-			break
-		}
+
 		if currentEntry+entries[i+1] > 2020 {
 			break
 		}
@@ -43,9 +41,7 @@ func GetMultiplicationOf3EntriesThatSum2020(entries []int) uint64 {
 
 	for i := 0; i < len(entries)-2; i++ {
 		currentEntry := entries[i]
-		if currentEntry >= 2020 {
-			break
-		}
+
 		if currentEntry+entries[i+1]+entries[i+2] > 2020 {
 			break
 		}
