@@ -47,16 +47,16 @@ func GetMultiplicationOf3EntriesThatSum2020(entries []int) uint64 {
 		}
 
 		for n := i + 1; n < len(entries)-1; n++ {
-			currentSecondEntry := entries[n]
+			nextEntry := entries[n]
 
-			if currentEntry+currentSecondEntry+entries[n+1] > 2020 {
+			if currentEntry+nextEntry+entries[n+1] > 2020 {
 				break
 			}
 
-			expectedValue := 2020 - currentEntry - currentSecondEntry
+			expectedValue := 2020 - currentEntry - nextEntry
 
 			if binarySearch(entries[n:], expectedValue) > -1 {
-				result += uint64(expectedValue * currentEntry * currentSecondEntry)
+				result += uint64(expectedValue * currentEntry * nextEntry)
 			}
 		}
 	}
