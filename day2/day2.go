@@ -15,7 +15,8 @@ func main() {
 	}
 
 	inputString := string(input)
-	count := 0
+	validPasswordsPuzzle1Count := 0
+	validPasswordsPuzzle2Count := 0
 
 	for true {
 		// Look for min
@@ -31,15 +32,19 @@ func main() {
 		// Look for keyword
 		index = strings.Index(inputString, ":")
 		keyword := inputString[:index]
-		inputString = inputString[index+1:]
+		inputString = inputString[index+2:]
 
 		// Look for password
 		index = strings.Index(inputString, "\n")
 		if index > -1 {
 			password := inputString[:index]
 
-			if IsPasswordValid(CorruptedPassword{password, keyword, min, max}) {
-				count++
+			if IsValidPasswordPuzzle1(password, keyword, min, max) {
+				validPasswordsPuzzle1Count++
+			}
+
+			if IsValidPasswordPuzzle2(password, keyword[0], min, max) {
+				validPasswordsPuzzle2Count++
 			}
 
 			inputString = inputString[index+1:]
@@ -47,42 +52,44 @@ func main() {
 		} else {
 			password := inputString
 
-			if IsPasswordValid(CorruptedPassword{password, keyword, min, max}) {
-				count++
+			if IsValidPasswordPuzzle1(password, keyword, min, max) {
+				validPasswordsPuzzle1Count++
+			}
+
+			if IsValidPasswordPuzzle2(password, keyword[0], min, max) {
+				validPasswordsPuzzle2Count++
 			}
 
 			break
 		}
 	}
 
-	fmt.Print("Puzzle1:")
-	fmt.Println(count)
+	fmt.Printf("Puzzle1: %d\n", validPasswordsPuzzle1Count)
+	fmt.Printf("Puzzle2: %d\n", validPasswordsPuzzle2Count)
 }
 
-type CorruptedPassword struct {
-	password string
-	keyword  string
-	min      int
-	max      int
-}
-
-func IsPasswordValid(corruptedPassword CorruptedPassword) bool {
+func IsValidPasswordPuzzle1(password string, keyword string, min int, max int) bool {
 	keyCount := 0
 
 	for true {
-		index := strings.Index(corruptedPassword.password, corruptedPassword.keyword)
+		index := strings.Index(password, keyword)
 		if index > -1 {
 			keyCount++
 
-			if keyCount > corruptedPassword.max {
+			if keyCount > max {
 				return false
 			}
 
-			corruptedPassword.password = corruptedPassword.password[index+1:]
+			password = password[index+1:]
 		} else {
 			break
 		}
 	}
 
-	return keyCount <= corruptedPassword.max && keyCount >= corruptedPassword.min
+	return keyCount <= max && keyCount >= min
+}
+
+func IsValidPasswordPuzzle2(password string, keyword byte, firstPosition int, secondPosition int) bool {
+	return (password[firstPosition-1] == keyword && password[secondPosition-1] != keyword) ||
+		(password[firstPosition-1] != keyword && password[secondPosition-1] == keyword)
 }
