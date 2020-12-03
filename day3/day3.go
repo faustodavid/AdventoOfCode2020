@@ -15,7 +15,18 @@ func main() {
 
 	inputString := string(input)
 	grid := StringToByteGrid(inputString)
-	print(CountTreesOnGridUsingPattern(grid, 3, 1))
+
+	print("Puzzle1: ")
+	println(CountTreesOnGridUsingPattern(grid, 3, 1))
+
+	puzzle2Answer := CountTreesOnGridUsingPattern(grid, 1, 1) *
+		CountTreesOnGridUsingPattern(grid, 3, 1) *
+		CountTreesOnGridUsingPattern(grid, 5, 1) *
+		CountTreesOnGridUsingPattern(grid, 7, 1) *
+		CountTreesOnGridUsingPattern(grid, 1, 2)
+
+	print("Puzzle2: ")
+	println(puzzle2Answer)
 }
 
 func StringToByteGrid(input string) [][]byte {
