@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	input, err := ioutil.ReadFile("/Users/fsuarezrosario/go/src/AdventoOfCode2020/day3/input.txt")
+	input, err := ioutil.ReadFile("input.txt")
 	if err != nil {
 		fmt.Println("File reading error", err)
 		return
@@ -16,11 +16,13 @@ func main() {
 	inputString := string(input)
 	grid := StringToByteGrid(inputString)
 
+	puzzle1Answer := CountTreesOnGridUsingPattern(grid, 3, 1)
+
 	print("Puzzle1: ")
-	println(CountTreesOnGridUsingPattern(grid, 3, 1))
+	println(puzzle1Answer)
 
 	puzzle2Answer := CountTreesOnGridUsingPattern(grid, 1, 1) *
-		CountTreesOnGridUsingPattern(grid, 3, 1) *
+		puzzle1Answer *
 		CountTreesOnGridUsingPattern(grid, 5, 1) *
 		CountTreesOnGridUsingPattern(grid, 7, 1) *
 		CountTreesOnGridUsingPattern(grid, 1, 2)
