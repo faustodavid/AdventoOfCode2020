@@ -64,11 +64,11 @@ func isPassportValidPuzzle1(passport string) bool {
 }
 
 func isPassportValidPuzzle2(passport string) bool {
-	passportCopy := passport
+	containsCid := strings.Contains(passport, "cid")
 	propertiesCount := 0
 	for true {
-		indexOfBlankSpace := strings.Index(passportCopy, " ")
-		indexOfBreakLine := strings.Index(passportCopy, "\n")
+		indexOfBlankSpace := strings.Index(passport, " ")
+		indexOfBreakLine := strings.Index(passport, "\n")
 		indexOfPropertyEnd := -1
 
 		if (indexOfBlankSpace < indexOfBreakLine && indexOfBlankSpace > -1) || indexOfBreakLine == -1 {
@@ -78,7 +78,7 @@ func isPassportValidPuzzle2(passport string) bool {
 		}
 
 		if indexOfPropertyEnd == -1 {
-			property := passportCopy
+			property := passport
 			if !isPropertyValid(property) {
 				return false
 			}
@@ -87,8 +87,8 @@ func isPassportValidPuzzle2(passport string) bool {
 			break
 		}
 
-		property := passportCopy[:indexOfPropertyEnd]
-		passportCopy = passportCopy[indexOfPropertyEnd+1:]
+		property := passport[:indexOfPropertyEnd]
+		passport = passport[indexOfPropertyEnd+1:]
 
 		if !isPropertyValid(property) {
 			return false
@@ -97,7 +97,7 @@ func isPassportValidPuzzle2(passport string) bool {
 		propertiesCount++
 	}
 
-	return propertiesCount == 8 || (propertiesCount == 7 && !strings.Contains(passport, "cid"))
+	return propertiesCount == 8 || (propertiesCount == 7 && !containsCid)
 }
 
 func isPropertyValid(property string) bool {
