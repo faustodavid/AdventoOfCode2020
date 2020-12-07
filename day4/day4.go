@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	input, err := ioutil.ReadFile("/Users/fsuarezrosario/go/src/AdventoOfCode2020/day4/input.txt")
+	input, err := ioutil.ReadFile("input.txt")
 	if err != nil {
 		fmt.Println("File reading error", err)
 		return
